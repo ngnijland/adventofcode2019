@@ -138,47 +138,60 @@ const program = [
   0
 ];
 
-program[1] = 12;
-program[2] = 2;
-
-for (let i = 0; i <= program.length; i += 4) {
-  if (program[i] === 99) {
-    break;
-  }
-
-  const firstValue = program[i + 1];
-  const secondValue = program[i + 2];
-  const target = program[i + 3];
-
-  if (
-    typeof firstValue === "undefined" ||
-    typeof secondValue === "undefined" ||
-    typeof target === "undefined"
-  ) {
-    throw new Error("parameter is undefined");
-  }
-
-  if (
-    typeof program[firstValue] === "undefined" ||
-    typeof program[secondValue] === "undefined" ||
-    typeof program[target] === "undefined"
-  ) {
-    throw new Error("value out of reach");
-  }
-
-  switch (program[i]) {
-    case 1: {
-      program[target] = program[firstValue] + program[secondValue];
+function executeProgram(program: number[]): number {
+  for (let i = 0; i <= program.length; i += 4) {
+    if (program[i] === 99) {
       break;
     }
-    case 2: {
-      program[target] = program[firstValue] * program[secondValue];
-      break;
+
+    const firstValue = program[i + 1];
+    const secondValue = program[i + 2];
+    const target = program[i + 3];
+
+    if (
+      typeof firstValue === "undefined" ||
+      typeof secondValue === "undefined" ||
+      typeof target === "undefined"
+    ) {
+      throw new Error("parameter is undefined");
     }
-    default: {
-      throw new Error("unknown instruction");
+
+    if (
+      typeof program[firstValue] === "undefined" ||
+      typeof program[secondValue] === "undefined" ||
+      typeof program[target] === "undefined"
+    ) {
+      throw new Error("value out of reach");
+    }
+
+    switch (program[i]) {
+      case 1: {
+        program[target] = program[firstValue] + program[secondValue];
+        break;
+      }
+      case 2: {
+        program[target] = program[firstValue] * program[secondValue];
+        break;
+      }
+      default: {
+        throw new Error("unknown instruction");
+      }
+    }
+  }
+
+  return program[0];
+}
+
+for (let noun = 0; noun < 100; noun++) {
+  for (let verb = 0; verb < 100; verb++) {
+    const newProgram = [...program];
+    newProgram[1] = noun;
+    newProgram[2] = verb;
+
+    const outcome = executeProgram(newProgram);
+    if (outcome === 19690720) {
+      console.log(noun, verb);
+      console.log(100 * noun + verb);
     }
   }
 }
-
-console.log(program[0]);
