@@ -2,8 +2,6 @@ const assert = require("assert");
 
 const range = [353096, 843212];
 
-let validPasswordCount = 0;
-
 function hasAdjacentDigits(list: string[]): boolean {
   for (let i = 0; i < list.length; i++) {
     if (list[i] === list[i + 1]) {
@@ -23,6 +21,8 @@ function digitsIncrease(list: string[]): boolean {
 
   return true;
 }
+
+let validPasswordCount = 0;
 
 for (let i = range[0] + 1; i < range[1]; i++) {
   const charArray = i.toString().split("");
